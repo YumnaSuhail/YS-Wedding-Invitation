@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yumna & Suhail — Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8C6D46;
+            --secondary: #D4AF37;
+            --bg-color: #FBF9F5;
+            --card-bg: #FFFFFF;
+            --text-main: #2C2C2C;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(140, 109, 70, 0.1);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Cover Screen / Polaroid Reel */
+        .cover-screen {
+            padding: 40px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+
+        .cover-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            display: none;
+        }
+
+        .polaroid-frame {
+            background: white;
+            padding: 16px 16px 24px 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+            width: 260px;
+        }
+
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .polaroid-img {
+            width: 100%;
+            height: 300px;
+            background: #EFECE6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-style: italic;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Placeholder graphic if no photo is added */
+        .silhouette-art {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+        .polaroid-caption {
+            margin-top: 14px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .tap-prompt {
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Invitation Letter Content */
+        .invitation-content {
+            padding: 48px 32px;
+            text-align: center;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .invitation-content.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bismillah {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--secondary);
+            margin: 20px 0;
+        }
+
+        .details {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin: 24px 0;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: var(--secondary);
+            margin: 30px auto;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #755938;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="cardContainer">
+        <!-- Cover Screen with Polaroid -->
+        <div class="cover-screen" onclick="openInvitation()">
+            <div class="bismillah">﷽</div>
+            <div class="polaroid-frame">
+                <div class="polaroid-img">
+                    <div class="silhouette-art">Y & S</div>
+                </div>
+                <div class="polaroid-caption">Yumna & Suhail</div>
+            </div>
+            <div class="tap-prompt">Tap to Open Invitation</div>
+        </div>
+
+        <!-- Main Invitation Content -->
+        <div class="invitation-content" id="invitationContent">
+            <div class="bismillah">﷽</div>
+            <h1>The Wedding Celebration</h1>
+            <p class="details">Together with our families, we joyfully invite you to celebrate our union.</p>
+            
+            <div class="divider"></div>
+
+            <div class="names">Yumna & Suhail</div>
+            
+            <div class="details">
+                <strong>Save the Date</strong><br>
+                Late 2026<br>
+                Colombo, Sri Lanka
+            </div>
+
+            <div class="divider"></div>
+
+            <button class="btn" onclick="window.location.reload()">Replay Cover</button>
+        </div>
+    </div>
+
+    <script>
+        function openInvitation() {
+            const cover = document.querySelector('.cover-screen');
+            const content = document.getElementById('invitationContent');
+            
+            cover.classList.add('hidden');
+            setTimeout(() => {
+                content.classList.add('visible');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
